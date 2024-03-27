@@ -1,4 +1,4 @@
-# Conversor de YouTube para MP3
+# YouTube to MP3 Converter
 
 Este script em Python permite que você baixe vídeos do YouTube como arquivos de áudio MP3. Ele utiliza a biblioteca `pytube` para obter detalhes dos vídeos do YouTube e `moviepy` para lidar com a conversão do formato MP4 para MP3.
 
