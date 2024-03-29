@@ -1,10 +1,26 @@
 import os
+import shutil
 import random
 from pytube import YouTube, Search
 from moviepy.editor import *
 
 
-def ConvertMp4ToMp3(mp4, mp3):
+def creatingFolderToSaveMusic():
+    """
+    Create a folder to save downloaded music.
+
+    Returns:
+        str: Name of the created folder.
+        str: Path of the created folder.
+    """
+    directoryName = "MusicsByPython_" + str(random.randint(0, 100))
+    musicDirectoryPath = os.path.join(os.getcwd(), directoryName)
+    os.mkdir(musicDirectoryPath)
+
+    return directoryName, musicDirectoryPath
+
+
+def convertMp4ToMp3(mp4, mp3):
     """
     Convert the given mp4 file to mp3 format.
 
@@ -49,17 +65,44 @@ def downloadAndConvertVideoToAudio(title, folderName):
     AUDIO_FILE_PATH = fr"{os.getcwd()}\{folderName}\{yt.author} - {yt.title}.mp3"
 
     stream.download()
-    ConvertMp4ToMp3(VIDEO_FILE_PATH, AUDIO_FILE_PATH)
+    convertMp4ToMp3(VIDEO_FILE_PATH, AUDIO_FILE_PATH)
 
     os.remove(VIDEO_FILE_PATH)  # Delete Mp4 after the conversion
 
 
-# Creating folder to save music
-directoryName = "MusicsByPython_" + str(random.randint(0, 100))
-path = os.path.join(os.getcwd(), directoryName)
-os.mkdir(path)
+def readingAndDownloadingAndThenUploadingSongsToTheDirectory(directoryName):
+    """
+    Read song titles from a file, download and convert them to audio, and save them in the specified directory.
+
+    Parameters:
+        directoryName (str): Name of the directory to save the audio files.
+    """
+    with open("songs.txt", encoding="utf-8") as f:
+        for line in f:
+            downloadAndConvertVideoToAudio(line, directoryName)
+
+
+def organizeSongsInDirectory(musicDirectoryPath):
+    """
+    Organize songs in the directory by moving them to artist folders.
+
+    Parameters:
+        musicDirectoryPath (str): Path of the directory containing the songs.
+    """
+    songs = os.listdir(musicDirectoryPath)
+
+    for song in songs:
+        if song.endswith('.mp3'):
+            artist = song.split(' - ')[0]
+
+            artistFolder = os.path.join(musicDirectoryPath, artist)
+            if not os.path.exists(artistFolder):
+                os.makedirs(artistFolder)
+
+            shutil.move(os.path.join(musicDirectoryPath, song), os.path.join(artistFolder, song))
+
 
 # Running
-with open("songs.txt", encoding="utf-8") as f:
-    for line in f:
-        downloadAndConvertVideoToAudio(line, directoryName)
+directoryName, musicDirectoryPath = creatingFolderToSaveMusic()
+readingAndDownloadingAndThenUploadingSongsToTheDirectory(directoryName)
+organizeSongsInDirectory(musicDirectoryPath)
