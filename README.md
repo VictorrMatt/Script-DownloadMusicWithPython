@@ -1,55 +1,65 @@
 # YouTube to MP3 Converter
 
-Este script em Python permite que você baixe vídeos do YouTube como arquivos de áudio MP3. Ele utiliza a biblioteca `pytube` para obter detalhes dos vídeos do YouTube e `moviepy` para lidar com a conversão do formato MP4 para MP3.
+Este script em Python permite que você baixe vídeos do YouTube como arquivos de áudio MP3. Ele também organiza as músicas baixadas em pastas por artistas.
 
-## Pré-requisitos
-- Python 3.x
-- Pacotes Python necessários: `pytube`, `moviepy`
+## Funcionalidades
 
-## Instalação
-1. Clone este repositório para sua máquina local ou baixe o script diretamente.
-2. Certifique-se de que o Python e os pacotes necessários estejam instalados.
-3. Coloque o script no diretório desejado.
+1. **Criar Pasta para Salvar Músicas**
+   - Função: `creatingFolderToSaveMusic()`
+   - Cria uma pasta para salvar as músicas baixadas.
+   - Retorna:
+     - Nome da pasta criada.
+     - Caminho da pasta criada.
 
-## Uso
-1. Crie um arquivo de texto chamado `songs.txt` no mesmo diretório do script.
-2. Em `songs.txt`, liste os títulos dos vídeos do YouTube que você deseja converter para MP3, cada um em uma nova linha.
-3. Execute o script.
-4. O script criará uma pasta chamada "MúsicasPorPython_X" (onde X é um número aleatório) no diretório do script.
-5. Ele irá baixar cada vídeo do YouTube, converter para o formato MP3 e salvar na pasta criada.
-
-## Exemplo de songs.txt
-Despacito  
-Shape of You  
-Believer  
-
-
-## Funções
-
-1. **ConvertMp4ToMp3(mp4, mp3)**
-   - Converte o arquivo MP4 fornecido para o formato MP3.
+2. **Converter MP4 para MP3**
+   - Função: `convertMp4ToMp3(mp4, mp3)`
+   - Converte um arquivo MP4 para o formato MP3.
    - Parâmetros:
-     - `mp4` (str): Caminho para o arquivo MP4 de entrada.
+     - `mp4` (str): Caminho do arquivo MP4 de entrada.
      - `mp3` (str): Caminho para salvar o arquivo MP3 de saída.
 
-2. **getTheFirstResult(title)**
-   - Recupera o ID do vídeo do primeiro resultado de uma busca no YouTube com base no título fornecido.
+3. **Obter Primeiro Resultado da Busca**
+   - Função: `getTheFirstResult(title)`
+   - Obtém o ID do vídeo do primeiro resultado da busca no YouTube.
    - Parâmetros:
-     - `title` (str): O título do vídeo a ser pesquisado.
+     - `title` (str): Título do vídeo a ser pesquisado.
    - Retorna:
-     - `str`: ID do vídeo do primeiro resultado da busca.
+     - ID do vídeo do primeiro resultado da busca.
 
-3. **downloadAndConvertVideoToAudio(title, folderName)**
-   - Baixa um vídeo do YouTube pelo seu título, converte-o para o formato MP3 e salva-o na pasta especificada.
+4. **Baixar e Converter Vídeo para Áudio**
+   - Função: `downloadAndConvertVideoToAudio(title, folderName)`
+   - Baixa um vídeo do YouTube pelo título, converte-o para MP3 e salva na pasta especificada.
    - Parâmetros:
-     - `title` (str): O título do vídeo do YouTube.
-     - `folderName` (str): O nome da pasta para salvar o arquivo de áudio.
+     - `title` (str): Título do vídeo do YouTube.
+     - `folderName` (str): Nome da pasta para salvar o arquivo de áudio.
 
-## Observação
+5. **Ler, Baixar e Organizar Músicas**
+   - Função: `readingAndDownloadingAndThenUploadingSongsToTheDirectory(directoryName)`
+   - Lê os títulos das músicas de um arquivo, baixa e converte para áudio, e salva na pasta especificada.
+   - Parâmetros:
+     - `directoryName` (str): Nome da pasta para salvar os arquivos de áudio.
+
+6. **Organizar Músicas na Pasta**
+   - Função: `organizeSongsInDirectory(musicDirectoryPath)`
+   - Organiza as músicas na pasta movendo-as para pastas de artistas.
+   - Parâmetros:
+     - `musicDirectoryPath` (str): Caminho da pasta contendo as músicas.
+
+## Uso
+
+1. Clone este repositório para sua máquina local.
+2. Instale as dependências necessárias (`pytube`, `moviepy`).
+3. Crie um arquivo de texto chamado `songs.txt` e liste os títulos dos vídeos do YouTube que deseja converter para MP3, um por linha.
+4. Execute o script.
+
+## Observações
+
 - O script baixa o áudio na melhor qualidade disponível (140).
-- Ele exclui o arquivo MP4 baixado após a conversão para economizar espaço em disco.
+- Os arquivos MP4 baixados são excluídos após a conversão para economizar espaço em disco.
+- As músicas são organizadas em pastas por artistas.
 
 ## Aviso Legal
+
 Este script destina-se apenas para uso pessoal. Certifique-se de ter os direitos necessários para baixar e usar o conteúdo antes de prosseguir.
 
 Sinta-se à vontade para contribuir, relatar problemas ou sugerir melhorias!
